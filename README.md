@@ -1,4 +1,4 @@
-# FlashLearn Microservices
+# FlashLearn Microservices ![Flashcard Logo](logo.png)
 
 This repository contains the microservices version of the **FlashLearn Application**. The application has been refactored into several independent services, each focusing on specific features of the application. The microservices architecture allows for better scalability, modularity, and ease of maintenance.
 
