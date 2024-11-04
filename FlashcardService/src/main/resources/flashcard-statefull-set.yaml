@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flashcard-headless-service
+spec:
+  clusterIP: None
+  selector:
+    app: flashcard-db
+  ports:
+    - port: 5432
+      name: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: flashcard-stateful-set
+spec:
+  serviceName: flashcard-headless-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flashcard-db
+  volumeClaimTemplates:
+    - metadata:
+        name: flashcard-db-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 500Mi
+  template:
+    metadata:
+      labels:
+        app: flashcard-db
+    spec:
+      containers:
+        - name: flashcard-db
+          image: postgres:15.0
+          envFrom:
+            - secretRef:
+                name: flashcard-secret
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - name: flashcard-db-storage
+              mountPath: /var/lib/postgresql/data

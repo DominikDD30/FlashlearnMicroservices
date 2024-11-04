@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: deepl-service
+spec:
+  type: ClusterIP
+  selector:
+    app: deepl-pod
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8083
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deepl-deployment
+  labels:
+    app: deepl-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deepl-pod
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 0%
+  template:
+    metadata:
+      labels:
+        app: deepl-pod
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: deepl
+          image: deepl:1.0.0
+          envFrom:
+            - secretRef:
+                name: deepl-secret
+          resources:
+            limits:
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+          ports:
+            - containerPort: 8083
+              name: http

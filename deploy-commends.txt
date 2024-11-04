@@ -1,0 +1,12 @@
+minikube image build -t flashcard:1.0.0 FlashcardService
+
+minikube image build -t quiz:1.0.0 QuizService
+
+minikube image build -t deepl:1.0.0 DeeplService
+
+minikube image build -t pexel:1.0.0 PexelService
+
+minikube image build -t generator:1.0.0 GenerationService
+
+minikube image build -t appauth:1.0.0 SecurityService
+

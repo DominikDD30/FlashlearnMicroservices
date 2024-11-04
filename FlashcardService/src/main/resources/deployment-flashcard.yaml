@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flashcard-service
+spec:
+  type: ClusterIP
+  selector:
+    app: flashcard-pod
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flashcard-deployment
+  labels:
+    app: flashcard-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flashcard-pod
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: flashcard-pod
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: flashcard
+          image: flashcard:1.0.0
+          envFrom:
+            - secretRef:
+                name: flashcard-secret
+          resources:
+            limits:
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+          ports:
+            - containerPort: 8080
+              name: http
