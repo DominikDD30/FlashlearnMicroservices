@@ -39,16 +39,17 @@ This repository contains the microservices version of the **FlashLearn Applicati
 - **api-gateway.yaml**: Configuration file for the API gateway, which routes external requests to the appropriate microservices. This file centralizes access to all services, allowing for easier load balancing and routing.
 - **deploy-commands.txt**: Contains deployment commands and instructions, useful for setting up and deploying the services on a Kubernetes or Docker environment.
 
+
 ## Technology Stack
 
-- **Java 17 & Spring Boot**: Most of the backend services are implemented in Java using Spring Boot, which provides a robust framework for building microservices.
-- **Python & FastAPI**: The `GenerationService` leverages FastAPI due to its asynchronous capabilities and ease of use for machine learning or AI-focused tasks.
-- **Docker**: Each service is containerized with Docker for easy deployment and scalability.
-- **Kubernetes**: The application can be orchestrated on Kubernetes for production deployments, using the configuration files provided.
+- **Java 17 & Spring Boot** ☕🌱 Most of the backend services are implemented in Java using Spring Boot, which provides a robust framework for building microservices.
+- **Python & FastAPI** 🐍  The `GenerationService` leverages FastAPI due to its asynchronous capabilities and ease of use for machine learning or AI-focused tasks.
+- **Docker** 🐳  Each service is containerized with Docker for easy deployment and scalability.
+- **Kubernetes** ☸️ The application can be orchestrated on Kubernetes for production deployments, using the configuration files provided.
+
 
 ## Running the Application
 
-1. **Build and Run Services**:
-2. 1. Use the commands from deploy-commands.txt file to install service images.
-   2. deploy services change path to deploy manifests in terminal then type kubectl apply -f <file>.yaml
-   3. deploy ingress controller 
+ * Use the commands from deploy-commands.txt file to install service images.
+ * deploy services change path to deploy manifests in terminal then type kubectl apply -f <file>.yaml
+ * deploy ingress controller 
